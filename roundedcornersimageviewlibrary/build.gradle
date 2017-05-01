@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'com.roundedcornersimageviewlibrary'
+    bintrayRepo = 'AndroidRepository'
+    bintrayName = 'RoundedCornersImageView'
 
     publishedGroupId = 'com.roundedcornersimageviewlibrary'
-    libraryName = 'com.roundedcornersimageviewlibrary'
-    artifact = 'com.roundedcornersimageviewlibrary'
+    libraryName = 'RoundedCornersImageView'
+    artifact = 'RoundedCornersImageView'
 
     libraryDescription = 'A wrapper for Rounded Edges Image View on Android'
 
