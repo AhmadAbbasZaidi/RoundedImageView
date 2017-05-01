@@ -4,6 +4,7 @@ apply plugin: 'com.android.library'
 ext {
     bintrayRepo = 'AndroidRepository'
     bintrayName = 'RoundedCornersImageView'
+    versionName = "1.0"
 
     publishedGroupId = 'com.roundedcornersimageviewlibrary'
     libraryName = 'RoundedCornersImageView'
@@ -14,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/AhmadAbbasZaidi/RoundedImageView'
     gitUrl = 'https://github.com/AhmadAbbasZaidi/RoundedImageView.git'
 
-    libraryVersion = '0.0.2'
+    libraryVersion = '1.0'
 
     developerId = 'AhmadAbbasZaidi'
     developerName = 'Syed Ahmad Abbas Zaidi'
