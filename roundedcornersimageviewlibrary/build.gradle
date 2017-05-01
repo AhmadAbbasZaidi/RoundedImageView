@@ -4,18 +4,18 @@ apply plugin: 'com.android.library'
 ext {
     bintrayRepo = 'AndroidRepository'
     bintrayName = 'RoundedCornersImageView'
-    versionName = "1.0"
+    versionName = "1.1"
 
     publishedGroupId = 'com.roundedcornersimageviewlibrary'
-    libraryName = 'RoundedCornersImageView'
-    artifact = 'RoundedCornersImageView'
+    libraryName = 'roundedcornersimageviewlibrary'
+    artifact = 'roundedcornersimageviewlibrary'
 
     libraryDescription = 'A wrapper for Rounded Edges Image View on Android'
 
     siteUrl = 'https://github.com/AhmadAbbasZaidi/RoundedImageView'
     gitUrl = 'https://github.com/AhmadAbbasZaidi/RoundedImageView.git'
 
-    libraryVersion = '1.0'
+    libraryVersion = '1.1'
 
     developerId = 'AhmadAbbasZaidi'
     developerName = 'Syed Ahmad Abbas Zaidi'
