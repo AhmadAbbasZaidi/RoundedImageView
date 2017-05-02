@@ -62,15 +62,15 @@ public class RoundedEdgesImageView extends ImageView {
             canvas.drawRoundRect(rec, finalBitmap.getWidth() / divider, finalBitmap.getWidth() / divider, paint);
             paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
             canvas.drawBitmap(finalBitmap, rect, rect, paint);
-        } /*else if (type == SQUARE) {
+        } else if (type == SQUARE) {
             canvas.drawRect(rec, paint);
             paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
             canvas.drawBitmap(finalBitmap, rect, rect, paint);
         }
-*/
+
         if (type == SQUARE_WITH_BORDER || type == CIRCLE_WITH_BORDER || type == SQUARE_WITH_ROUNDED_CORNERED_BORDER) {
             Paint p = new Paint();
-           /* if(type == SQUARE_WITH_BORDER)
+        /*    if(type == SQUARE_WITH_BORDER)
             {
                 p.setStrokeCap(Paint.Cap.SQUARE);
             }
@@ -79,7 +79,6 @@ public class RoundedEdgesImageView extends ImageView {
                 p.setStrokeCap(Paint.Cap.ROUND);
             }
 
-//            p.setStrokeCap(Paint.Cap.ROUND);
             p.setStrokeWidth(borderWidth);
             p.setColor(color);
             p.setStyle(Paint.Style.STROKE);
