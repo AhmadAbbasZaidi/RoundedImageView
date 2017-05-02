@@ -28,60 +28,7 @@ public class RoundedEdgesImageView extends ImageView {
     int type = SQUARE;
     int color = Color.TRANSPARENT;
     int borderWidth = 0;
-    int divider =1;
-
-    public void setToCircleWithoutBorder()
-    {
-        type = CIRCLE_WITHOUT_BORDER;
-        this.divider=2;
-    }
-    public void setToCircleWithBorder(String color,int borderWidth)
-    {
-        type = CIRCLE_WITH_BORDER;
-        this.color= Color.parseColor(color);
-        this.borderWidth = borderWidth;
-        this.divider=2;
-    }
-    public void setToCircleWithBorder(int color,int borderWidth)
-    {
-        type = CIRCLE_WITH_BORDER;
-        this.color= color;
-        this.borderWidth = borderWidth;
-        this.divider=2;
-    }
-    public void setToSquareWithBorder(int color,int borderWidth)
-    {
-        type = SQUARE_WITH_BORDER;
-        this.color= color;
-        this.borderWidth = borderWidth;
-        this.divider=1;
-    }
-    public void setToSquareWithBorder(String color,int borderWidth)
-    {
-        type = SQUARE_WITH_BORDER;
-        this.color= Color.parseColor(color);
-        this.borderWidth = borderWidth;
-        this.divider=1;
-    }
-    public void setToSquareWithRoundedCorners()
-    {
-        type = SQUARE_WITH_ROUNDED_CORNERS;
-        this.divider=10;
-    }
-    public void setToSquareWithRoundedCorneredBorder(String color,int borderWidth)
-    {
-        type = SQUARE_WITH_ROUNDED_CORNERED_BORDER;
-        this.color= Color.parseColor(color);
-        this.borderWidth = borderWidth;
-        this.divider=10;
-    }
-    public void setToSquareWithRoundedCorneredBorder(int color,int borderWidth)
-    {
-        type = SQUARE_WITH_ROUNDED_CORNERED_BORDER;
-        this.color= color;
-        this.borderWidth = borderWidth;
-        this.divider=10;
-    }
+    int divider = 1;
 
     public RoundedEdgesImageView(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
@@ -107,30 +54,32 @@ public class RoundedEdgesImageView extends ImageView {
         paint.setColor(Color.parseColor("#D1D1D1"));
         RectF rec = new RectF(0, 0, finalBitmap.getWidth(), finalBitmap.getHeight());
 
-        if (type == CIRCLE_WITH_BORDER||type == CIRCLE_WITHOUT_BORDER) {
-            canvas.drawCircle(finalBitmap.getWidth() , finalBitmap.getHeight() / divider, finalBitmap.getWidth() / divider, paint);
+        if (type == CIRCLE_WITH_BORDER || type == CIRCLE_WITHOUT_BORDER) {
+            canvas.drawCircle(finalBitmap.getWidth() / divider, finalBitmap.getHeight() / divider, finalBitmap.getWidth() / divider, paint);
             paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
             canvas.drawBitmap(finalBitmap, rect, rect, paint);
-        } else if (type == SQUARE_WITH_ROUNDED_CORNERS||type==SQUARE_WITH_ROUNDED_CORNERED_BORDER) {
-            canvas.drawRoundRect(rec, finalBitmap.getWidth()/ divider, finalBitmap.getWidth()/ divider, paint);
+        } else if (type == SQUARE_WITH_ROUNDED_CORNERS || type == SQUARE_WITH_ROUNDED_CORNERED_BORDER) {
+            canvas.drawRoundRect(rec, finalBitmap.getWidth() / divider, finalBitmap.getWidth() / divider, paint);
             paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
             canvas.drawBitmap(finalBitmap, rect, rect, paint);
-        } else if (type == SQUARE)
-        {
+        } else if (type == SQUARE) {
             canvas.drawRect(rec, paint);
             paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
             canvas.drawBitmap(finalBitmap, rect, rect, paint);
         }
 
-        if(type == SQUARE_WITH_BORDER||type == CIRCLE_WITH_BORDER||type == SQUARE_WITH_ROUNDED_CORNERED_BORDER) {
+        if (type == SQUARE_WITH_BORDER || type == CIRCLE_WITH_BORDER || type == SQUARE_WITH_ROUNDED_CORNERED_BORDER) {
             Paint p = new Paint();
-            if(type == SQUARE_WITH_BORDER)
+           /* if(type == SQUARE_WITH_BORDER)
             {
                 p.setStrokeCap(Paint.Cap.SQUARE);
             }
-            else if(type == SQUARE_WITH_ROUNDED_CORNERED_BORDER||type == CIRCLE_WITH_BORDER) {
+            else*/
+            if (type == SQUARE_WITH_ROUNDED_CORNERED_BORDER || type == CIRCLE_WITH_BORDER) {
                 p.setStrokeCap(Paint.Cap.ROUND);
             }
+
+//            p.setStrokeCap(Paint.Cap.ROUND);
             p.setStrokeWidth(borderWidth);
             p.setColor(color);
             p.setStyle(Paint.Style.STROKE);
@@ -140,6 +89,58 @@ public class RoundedEdgesImageView extends ImageView {
             canvas.drawRoundRect(r, finalBitmap.getWidth() / divider, finalBitmap.getWidth() / divider, p);
         }
         return output;
+    }
+
+    public void setToCircleWithoutBorder() {
+        type = CIRCLE_WITHOUT_BORDER;
+        this.divider = 2;
+    }
+
+    public void setToCircleWithBorder(String color, int borderWidth) {
+        type = CIRCLE_WITH_BORDER;
+        this.color = Color.parseColor(color);
+        this.borderWidth = borderWidth;
+        this.divider = 2;
+    }
+
+    public void setToCircleWithBorder(int color, int borderWidth) {
+        type = CIRCLE_WITH_BORDER;
+        this.color = color;
+        this.borderWidth = borderWidth;
+        this.divider = 2;
+    }
+
+    public void setToSquareWithBorder(int color, int borderWidth) {
+        type = SQUARE_WITH_BORDER;
+        this.color = color;
+        this.borderWidth = borderWidth;
+        this.divider = 1;
+    }
+
+    public void setToSquareWithBorder(String color, int borderWidth) {
+        type = SQUARE_WITH_BORDER;
+        this.color = Color.parseColor(color);
+        this.borderWidth = borderWidth;
+        this.divider = 1;
+    }
+
+    public void setToSquareWithRoundedCorners() {
+        type = SQUARE_WITH_ROUNDED_CORNERS;
+        this.divider = 10;
+    }
+
+    public void setToSquareWithRoundedCorneredBorder(String color, int borderWidth) {
+        type = SQUARE_WITH_ROUNDED_CORNERED_BORDER;
+        this.color = Color.parseColor(color);
+        this.borderWidth = borderWidth;
+        this.divider = 10;
+    }
+
+    public void setToSquareWithRoundedCorneredBorder(int color, int borderWidth) {
+        type = SQUARE_WITH_ROUNDED_CORNERED_BORDER;
+        this.color = color;
+        this.borderWidth = borderWidth;
+        this.divider = 10;
     }
 
     @Override
@@ -163,7 +164,7 @@ public class RoundedEdgesImageView extends ImageView {
 
                 int radius = getWidth(); //Radius = width
 
-                Bitmap roundBitmap = getRoundedCroppedBitmap(bitmap, radius, color, borderWidth, type,divider);
+                Bitmap roundBitmap = getRoundedCroppedBitmap(bitmap, radius, color, borderWidth, type, divider);
 
                 canvas.drawBitmap(roundBitmap, 0, 0, null);
             } catch (OutOfMemoryError error) {
