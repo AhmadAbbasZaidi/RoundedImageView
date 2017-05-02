@@ -2,5 +2,5 @@
 
 
 
-compile 'com.roundedcornersimageviewlibrary:roundedcornersimageviewlibrary:1.1'
+compile 'com.roundedcornersimageviewlibrary:roundedcornersimageviewlibrary:1.3'
 
