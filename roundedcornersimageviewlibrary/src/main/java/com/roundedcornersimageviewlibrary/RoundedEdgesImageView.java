@@ -19,24 +19,77 @@ import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 
 public class RoundedEdgesImageView extends ImageView {
 
-    int color = Color.WHITE;
+    private static int SQUARE = 0;
+    private static int SQUARE_WITH_BORDER = 1;
+    private static int SQUARE_WITH_ROUNDED_CORNERS = 2;
+    private static int SQUARE_WITH_ROUNDED_CORNERED_BORDER = 3;
+    private static int CIRCLE_WITH_BORDER = 4;
+    private static int CIRCLE_WITHOUT_BORDER = 5;
+    int type = SQUARE;
+    int color = Color.TRANSPARENT;
+    int borderWidth = 0;
+    int divider =1;
 
-    public void setBorderWidth(int borderWidth) {
-        this.borderWidth = borderWidth;
+    public void setToCircleWithoutBorder()
+    {
+        type = CIRCLE_WITHOUT_BORDER;
+        this.divider=2;
     }
-
-    int borderWidth = 10;
-
-    public void setColor(int color) {
-        this.color = color;
+    public void setToCircleWithBorder(String color,int borderWidth)
+    {
+        type = CIRCLE_WITH_BORDER;
+        this.color= Color.parseColor(color);
+        this.borderWidth = borderWidth;
+        this.divider=2;
+    }
+    public void setToCircleWithBorder(int color,int borderWidth)
+    {
+        type = CIRCLE_WITH_BORDER;
+        this.color= color;
+        this.borderWidth = borderWidth;
+        this.divider=2;
+    }
+    public void setToSquareWithBorder(int color,int borderWidth)
+    {
+        type = SQUARE_WITH_BORDER;
+        this.color= color;
+        this.borderWidth = borderWidth;
+        this.divider=1;
+    }
+    public void setToSquareWithBorder(String color,int borderWidth)
+    {
+        type = SQUARE_WITH_BORDER;
+        this.color= Color.parseColor(color);
+        this.borderWidth = borderWidth;
+        this.divider=1;
+    }
+    public void setToSquareWithRoundedCorners()
+    {
+        type = SQUARE_WITH_ROUNDED_CORNERS;
+        this.divider=10;
+    }
+    public void setToSquareWithRoundedCorneredBorder(String color,int borderWidth)
+    {
+        type = SQUARE_WITH_ROUNDED_CORNERED_BORDER;
+        this.color= Color.parseColor(color);
+        this.borderWidth = borderWidth;
+        this.divider=10;
+    }
+    public void setToSquareWithRoundedCorneredBorder(int color,int borderWidth)
+    {
+        type = SQUARE_WITH_ROUNDED_CORNERED_BORDER;
+        this.color= color;
+        this.borderWidth = borderWidth;
+        this.divider=10;
     }
 
     public RoundedEdgesImageView(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
     }
 
-    public static Bitmap getRoundedCroppedBitmap(Bitmap bitmap, int radius, int color, int borderWidth) {
+    public static Bitmap getRoundedCroppedBitmap(Bitmap bitmap, int radius, int color, int borderWidth, int type, int divider) {
         Bitmap finalBitmap;
+
         if (bitmap.getWidth() != radius || bitmap.getHeight() != radius)
             finalBitmap = Bitmap.createScaledBitmap(bitmap, radius, radius, false);
         else
@@ -53,20 +106,39 @@ public class RoundedEdgesImageView extends ImageView {
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(Color.parseColor("#D1D1D1"));
         RectF rec = new RectF(0, 0, finalBitmap.getWidth(), finalBitmap.getHeight());
-        canvas.drawRoundRect(rec, finalBitmap.getWidth() / 10, finalBitmap.getWidth() / 10, paint);
-        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-        canvas.drawBitmap(finalBitmap, rect, rect, paint);
 
-        Paint p = new Paint();
-        p.setStrokeCap(Paint.Cap.ROUND);
-        p.setStrokeWidth(borderWidth);
-        p.setColor(color);
-        p.setStyle(Paint.Style.STROKE);
-        // BORDER
-        RectF r = new RectF(0, 0, finalBitmap.getWidth(), finalBitmap.getHeight());
-        p.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-        canvas.drawRoundRect(r, finalBitmap.getWidth() / 10, finalBitmap.getWidth() / 10, p);
+        if (type == CIRCLE_WITH_BORDER||type == CIRCLE_WITHOUT_BORDER) {
+            canvas.drawCircle(finalBitmap.getWidth() , finalBitmap.getHeight() / divider, finalBitmap.getWidth() / divider, paint);
+            paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+            canvas.drawBitmap(finalBitmap, rect, rect, paint);
+        } else if (type == SQUARE_WITH_ROUNDED_CORNERS||type==SQUARE_WITH_ROUNDED_CORNERED_BORDER) {
+            canvas.drawRoundRect(rec, finalBitmap.getWidth()/ divider, finalBitmap.getWidth()/ divider, paint);
+            paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+            canvas.drawBitmap(finalBitmap, rect, rect, paint);
+        } else if (type == SQUARE)
+        {
+            canvas.drawRect(rec, paint);
+            paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+            canvas.drawBitmap(finalBitmap, rect, rect, paint);
+        }
 
+        if(type == SQUARE_WITH_BORDER||type == CIRCLE_WITH_BORDER||type == SQUARE_WITH_ROUNDED_CORNERED_BORDER) {
+            Paint p = new Paint();
+            if(type == SQUARE_WITH_BORDER)
+            {
+                p.setStrokeCap(Paint.Cap.SQUARE);
+            }
+            else if(type == SQUARE_WITH_ROUNDED_CORNERED_BORDER||type == CIRCLE_WITH_BORDER) {
+                p.setStrokeCap(Paint.Cap.ROUND);
+            }
+            p.setStrokeWidth(borderWidth);
+            p.setColor(color);
+            p.setStyle(Paint.Style.STROKE);
+            // BORDER
+            RectF r = new RectF(0, 0, finalBitmap.getWidth(), finalBitmap.getHeight());
+            p.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+            canvas.drawRoundRect(r, finalBitmap.getWidth() / divider, finalBitmap.getWidth() / divider, p);
+        }
         return output;
     }
 
@@ -91,7 +163,7 @@ public class RoundedEdgesImageView extends ImageView {
 
                 int radius = getWidth(); //Radius = width
 
-                Bitmap roundBitmap = getRoundedCroppedBitmap(bitmap, radius, color,borderWidth);
+                Bitmap roundBitmap = getRoundedCroppedBitmap(bitmap, radius, color, borderWidth, type,divider);
 
                 canvas.drawBitmap(roundBitmap, 0, 0, null);
             } catch (OutOfMemoryError error) {
